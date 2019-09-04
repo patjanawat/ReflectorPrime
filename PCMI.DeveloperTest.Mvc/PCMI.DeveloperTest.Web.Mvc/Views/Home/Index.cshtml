@@ -1,0 +1,16 @@
+@model IEnumerable<PCMI.DeveloperTest.Model.Contract>
+
+<script>
+    var customerFullName = '';
+    function HandleRowClick(s, e) {
+        s.GetRowValues(e.visibleIndex, 'Customer.FirstName;Customer.LastName', function (value) {            
+            customerFullName = value[0] + " " + value[1];
+        });
+    }
+    function showCustomerName(s,e) {
+        alert(customerFullName);
+    }
+</script>
+
+@Html.Partial("GridViewPartialView", Model)
+

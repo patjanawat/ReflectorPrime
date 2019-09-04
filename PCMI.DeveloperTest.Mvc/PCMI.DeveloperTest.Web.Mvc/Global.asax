@@ -1,0 +1,1 @@
+<%@ Application Codebehind="Global.asax.cs" Inherits="PCMI.DeveloperTest.Web.Mvc.MvcApplication" Language="C#" %>

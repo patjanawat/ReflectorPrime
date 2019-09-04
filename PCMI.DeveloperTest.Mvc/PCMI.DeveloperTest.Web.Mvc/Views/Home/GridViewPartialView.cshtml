@@ -1,0 +1,50 @@
+@model IEnumerable<PCMI.DeveloperTest.Model.Contract>
+@using PCMI.DeveloperTest.Model
+
+@(Html.DevExpress().GridView<Contract>
+    (
+    settings =>
+    {
+        settings.Name = "gridContracts";
+        settings.CallbackRouteValues = new { Controller = "Home", Action = "GridViewPartialView" };
+
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.PageSize = 20;
+        settings.Height = System.Web.UI.WebControls.Unit.Percentage(50);
+        settings.KeyFieldName = "Id";
+        settings.SettingsBehavior.AllowSelectSingleRowOnly = true;
+        settings.SettingsBehavior.AllowFocusedRow = true;
+
+        settings.Columns.Add(m => m.Id).Visible = false;        
+        settings.Columns.Add(m => m.Number);
+        settings.Columns.Add(m => m.Customer.FirstName);
+        settings.Columns.Add(m => m.Customer.LastName);
+        settings.Columns.Add(m => m.Price).PropertiesEdit.DisplayFormatString = "c";
+        settings.Columns.Add(m => m.PriceWithATX).PropertiesEdit.DisplayFormatString = "c";
+
+        settings.Columns[0].CellStyle.HorizontalAlign = HorizontalAlign.Left;
+        settings.Columns[1].CellStyle.HorizontalAlign = HorizontalAlign.Left;
+        settings.Columns[2].CellStyle.HorizontalAlign = HorizontalAlign.Left;
+        settings.Columns[3].CellStyle.HorizontalAlign = HorizontalAlign.Left;
+        settings.Columns[4].CellStyle.HorizontalAlign = HorizontalAlign.Left;
+        settings.Columns[5].CellStyle.HorizontalAlign = HorizontalAlign.Left;
+
+        settings.ClientSideEvents.RowClick = "HandleRowClick";
+
+        settings.Settings.ShowFooter = true;
+
+        settings.SetFooterRowTemplateContent(c =>
+        {
+            Html.ViewContext.Writer.Write("<div style='text-align:center;'>");
+            Html.DevExpress().Button(btn => {
+                btn.Name = "btnCustomer";
+                btn.Text = "Show Customer Name";
+                btn.ClientSideEvents.Click = "showCustomerName";
+            }).GetHtml();
+            Html.ViewContext.Writer.Write("</div>");
+
+           
+
+        });
+
+    }).Bind(Model).GetHtml())
